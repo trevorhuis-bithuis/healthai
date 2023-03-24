@@ -1,8 +1,16 @@
+from datetime import datetime
+import shortuuid
 from flask import Blueprint, request
 from flask_restx import Resource, Api, fields
+from db import redis_client
 
-from src import db
-from src.api.models import User
+def get_user(email):
+    user = redis_client.json().get(f"users:{email}")
+    return user
+    
+def set_user(email, user_obj):
+    redis_client.json().set(f"users:{email}", '$', user_obj)
+    return user_obj
 
 
 users_blueprint = Blueprint('users', __name__)
@@ -13,13 +21,10 @@ user = api.model('User', {
     'username': fields.String(required=True),
     'email': fields.String(required=True),
     'created_date': fields.DateTime,
+    'chats': fields.List(fields.String)
 })
 
 class UsersList(Resource):
-    
-    @api.marshal_with(user, as_list=True)
-    def get(self):
-        return User.query.all(), 200
 
     @api.expect(user, validate=True)
     def post(self):
@@ -28,13 +33,19 @@ class UsersList(Resource):
         email = post_data.get('email')
         response_object = {}
 
-        user = User.query.filter_by(email=email).first()
+        user = get_user(email)
         if user:
             response_object['message'] = 'Sorry. That email already exists.'
             return response_object, 400
         
-        db.session.add(User(username=username, email=email))
-        db.session.commit()
+        user = {
+            "id": shortuuid.uuid(),
+            "username": username,
+            "email": email,
+            "created_date": datetime.now(),
+            "chats": []
+        }
+        set_user(email, user)
 
         response_object['message'] = f'{email} was added!'
         return response_object, 201
@@ -42,12 +53,12 @@ class UsersList(Resource):
 class Users(Resource):
     
     @api.marshal_with(user)
-    def get(self, user_id):
-        user = User.query.filter_by(id=user_id).first()
+    def get(self, email):
+        user = get_user(email)
         if not user:
-            api.abort(404, f"User {user_id} does not exist")
+            api.abort(404, f"User {email} does not exist")
         return user, 200
 
 
 api.add_resource(UsersList, '/users')
-api.add_resource(Users, '/users/<int:user_id>')
+api.add_resource(Users, '/users/<email>')

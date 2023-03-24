@@ -1,18 +1,27 @@
-FROM python:3.11.2-slim-buster
+# syntax=docker/dockerfile:1.4
+FROM --platform=$BUILDPLATFORM python:3.10-alpine AS builder
 
-WORKDIR /usr/src/app
+WORKDIR /code
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+COPY requirements.txt /code
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip3 install -r requirements.txt
 
-RUN apt-get update \
-  && apt-get -y install netcat gcc postgresql \
-  && apt-get clean
+COPY . /code
 
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+ENTRYPOINT ["python3"]
+CMD ["app.py"]
 
-COPY . .
+FROM builder as dev-envs
 
-COPY ./entrypoint.sh .
-RUN chmod +x /usr/src/app/entrypoint.sh
+RUN <<EOF
+apk update
+apk add git bash
+EOF
+
+RUN <<EOF
+addgroup -S docker
+adduser -S --shell /bin/bash --ingroup docker vscode
+EOF
+# install Docker tools (cli, buildx, compose)
+COPY --from=gloursdocker/docker / /
