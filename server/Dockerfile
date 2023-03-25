@@ -1,27 +1,20 @@
-# syntax=docker/dockerfile:1.4
-FROM --platform=$BUILDPLATFORM python:3.10-alpine AS builder
+# New One
+FROM python:3.11.2-slim-buster
 
-WORKDIR /code
+WORKDIR /usr/src/app
 
-COPY requirements.txt /code
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip3 install -r requirements.txt
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-COPY . /code
+RUN apt-get update \
+  && apt-get clean
+
+RUN pip install --upgrade pip
+COPY ./requirements.txt .
+COPY ./requirements-dev.txt .
+RUN pip install -r requirements-dev.txt
+
+COPY . .
 
 ENTRYPOINT ["python3"]
-CMD ["app.py"]
-
-FROM builder as dev-envs
-
-RUN <<EOF
-apk update
-apk add git bash
-EOF
-
-RUN <<EOF
-addgroup -S docker
-adduser -S --shell /bin/bash --ingroup docker vscode
-EOF
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
+CMD ["manage.py"]

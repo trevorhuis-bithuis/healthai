@@ -3,16 +3,16 @@ services:
     image: redislabs/redismod
     ports:
       - '6379:6379'
-  web:
+  api:
     build:
       context: .
-      target: builder
-    # flask requires SIGINT to stop gracefully
-    # (default stop signal from Compose is SIGTERM)
+      dockerfile: Dockerfile
     stop_signal: SIGINT
     ports:
       - '8000:8000'
     volumes:
-      - .:/code
+      - .:/usr/src/app
     depends_on:
       - redis
+    environment:
+      - FLASK_DEBUG=1
