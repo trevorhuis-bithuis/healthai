@@ -14,7 +14,7 @@ user = api.model(
         "id": fields.String(readOnly=True),
         "email": fields.String(required=True),
         "created_date": fields.DateTime,
-        "chats": fields.List(fields.String),
+        "recipes": fields.List(fields.String),
     },
 )
 
@@ -35,7 +35,7 @@ class UsersList(Resource):
             "id": shortuuid.uuid(),
             "email": email,
             "created_date": datetime.utcnow().isoformat(),
-            "chats": [],
+            "recipes": [],
         }
         set_user(email, user)
 

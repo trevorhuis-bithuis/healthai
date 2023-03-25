@@ -16,3 +16,4 @@ services:
       - redis
     environment:
       - FLASK_DEBUG=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}

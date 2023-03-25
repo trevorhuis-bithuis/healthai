@@ -2,3 +2,5 @@ flask
 redis
 flask_restx
 shortuuid
+openai
+python-dotenv
