@@ -3,4 +3,5 @@ redis
 flask_restx
 shortuuid
 openai
-python-dotenv
+flask_jwt_extended
+bcrypt

@@ -4,6 +4,7 @@ from flask import Blueprint, request
 from flask_restx import Api, Resource, fields
 
 from src.users.crud import get_user, set_user, delete_user
+from src.auth.service import create_password_hash
 
 users_blueprint = Blueprint("users", __name__)
 api = Api(users_blueprint)
@@ -13,6 +14,7 @@ user = api.model(
     {
         "id": fields.String(readOnly=True),
         "email": fields.String(required=True),
+        "password": fields.String(required=True, writeOnly=True),
         "created_date": fields.DateTime,
         "recipes": fields.List(fields.String),
     },
@@ -24,6 +26,7 @@ class UsersList(Resource):
     def post(self):
         post_data = request.get_json()
         email = post_data.get("email")
+        password = post_data.get("password")
         response_object = {}
 
         user = get_user(email)
@@ -31,8 +34,11 @@ class UsersList(Resource):
             response_object["message"] = "Sorry. That email already exists."
             return response_object, 400
 
+        print(create_password_hash(password))
+
         user = {
             "id": shortuuid.uuid(),
+            "password": create_password_hash(password),
             "email": email,
             "created_date": datetime.utcnow().isoformat(),
             "recipes": [],

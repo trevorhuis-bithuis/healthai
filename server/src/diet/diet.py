@@ -2,6 +2,7 @@ from datetime import datetime
 import shortuuid
 from flask import Blueprint, request
 from flask_restx import Api, Resource, fields
+from flask_jwt_extended import jwt_required
 
 from src.diet.openai import generate_recipe
 from src.diet.crud import get_recipe, set_recipe, add_recipe_to_user
@@ -60,6 +61,7 @@ class RecipesList(Resource):
 
 class RecipesGenerate(Resource):
     @api.expect(recipe_generate, validate=True)
+    @jwt_required()
     def post(self):
         post_data = request.get_json()
         ingredients = post_data.get("ingredients")
