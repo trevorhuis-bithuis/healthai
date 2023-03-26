@@ -5,3 +5,4 @@ shortuuid
 openai
 flask_jwt_extended
 bcrypt
+flask-cors

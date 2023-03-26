@@ -32,7 +32,7 @@ class Login(Resource):
             access_token = create_access_token(
                 identity=email, expires_delta=timedelta(hours=2)
             )
-            response_object["access_token"] = access_token
+            response_object["token"] = access_token
             return response_object, 200
         else:
             response_object["message"] = "Invalid credentials."
