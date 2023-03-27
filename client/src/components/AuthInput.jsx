@@ -1,4 +1,10 @@
+import { Link, useLocation } from 'react-router-dom';
+
 const AuthInput = ({ email, setEmail, password, setPassword, headerText, handleSubmit }) => {
+  const location = useLocation();
+
+  const isLogin = location.pathname === '/login';
+
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -55,6 +61,28 @@ const AuthInput = ({ email, setEmail, password, setPassword, headerText, handleS
               Submit
             </button>
           </div>
+
+          {!isLogin && (
+            <div className="flex justify-center">
+              <p className="text-sm text-gray-600">
+                Already have an account?{' '}
+                <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Login
+                </Link>
+              </p>
+            </div>
+          )}
+
+          {isLogin && (
+            <div className="flex justify-center">
+              <p className="text-sm text-gray-600">
+                Don't have an account?{' '}
+                <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Register
+                </Link>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

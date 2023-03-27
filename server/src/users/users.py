@@ -1,10 +1,7 @@
-from datetime import datetime
-import shortuuid
-from flask import Blueprint, request
+from flask import Blueprint
 from flask_restx import Api, Resource, fields
 
-from src.users.crud import get_user, set_user, delete_user
-from src.auth.service import create_password_hash
+from src.users.crud import get_user, delete_user
 
 users_blueprint = Blueprint("users", __name__)
 api = Api(users_blueprint)
@@ -19,34 +16,6 @@ user = api.model(
         "recipes": fields.List(fields.String),
     },
 )
-
-
-class UsersList(Resource):
-    @api.expect(user, validate=True)
-    def post(self):
-        post_data = request.get_json()
-        email = post_data.get("email")
-        password = post_data.get("password")
-        response_object = {}
-
-        user = get_user(email)
-        if user:
-            response_object["message"] = "Sorry. That email already exists."
-            return response_object, 400
-
-        print(create_password_hash(password))
-
-        user = {
-            "id": shortuuid.uuid(),
-            "password": create_password_hash(password),
-            "email": email,
-            "created_date": datetime.utcnow().isoformat(),
-            "recipes": [],
-        }
-        set_user(email, user)
-
-        response_object["message"] = f"{email} was added!"
-        return response_object, 201
 
 
 class Users(Resource):
@@ -66,5 +35,4 @@ class Users(Resource):
         return user, 200
 
 
-api.add_resource(UsersList, "/users")
 api.add_resource(Users, "/users/<email>")

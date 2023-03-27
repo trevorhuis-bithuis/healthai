@@ -10,7 +10,6 @@ export const UserProvider = ({ children }) => {
   const [cookies, setCookies, removeCookie] = useCookies();
 
   const login = async (email, password) => {
-    console.log(`email: ${email}, password: ${password}`);
     const res = await api.post('/auth/login', {
       email,
       password,

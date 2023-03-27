@@ -35,6 +35,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
+            ["@headlessui/react", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:1.7.13"],
+            ["@heroicons/react", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:2.0.16"],
             ["@types/react", "npm:18.0.29"],
             ["@types/react-dom", "npm:18.0.11"],
             ["@vitejs/plugin-react", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.1.0"],
@@ -648,6 +650,55 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@gar-promisify-npm-1.1.3-ac1a325862-4059f790e2.zip/node_modules/@gar/promisify/",
           "packageDependencies": [
             ["@gar/promisify", "npm:1.1.3"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@headlessui/react", [
+        ["npm:1.7.13", {
+          "packageLocation": "./.yarn/cache/@headlessui-react-npm-1.7.13-538d171a24-132e5fce86.zip/node_modules/@headlessui/react/",
+          "packageDependencies": [
+            ["@headlessui/react", "npm:1.7.13"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:1.7.13", {
+          "packageLocation": "./.yarn/__virtual__/@headlessui-react-virtual-fc12eda90d/0/cache/@headlessui-react-npm-1.7.13-538d171a24-132e5fce86.zip/node_modules/@headlessui/react/",
+          "packageDependencies": [
+            ["@headlessui/react", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:1.7.13"],
+            ["@types/react", "npm:18.0.29"],
+            ["@types/react-dom", "npm:18.0.11"],
+            ["client-only", "npm:0.0.1"],
+            ["react", "npm:18.2.0"],
+            ["react-dom", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:18.2.0"]
+          ],
+          "packagePeers": [
+            "@types/react-dom",
+            "@types/react",
+            "react-dom",
+            "react"
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@heroicons/react", [
+        ["npm:2.0.16", {
+          "packageLocation": "./.yarn/cache/@heroicons-react-npm-2.0.16-ce9dfa3c94-1e51bfec72.zip/node_modules/@heroicons/react/",
+          "packageDependencies": [
+            ["@heroicons/react", "npm:2.0.16"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:2.0.16", {
+          "packageLocation": "./.yarn/__virtual__/@heroicons-react-virtual-a1ee7ce0a6/0/cache/@heroicons-react-npm-2.0.16-ce9dfa3c94-1e51bfec72.zip/node_modules/@heroicons/react/",
+          "packageDependencies": [
+            ["@heroicons/react", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:2.0.16"],
+            ["@types/react", "npm:18.0.29"],
+            ["react", "npm:18.2.0"]
+          ],
+          "packagePeers": [
+            "@types/react",
+            "react"
           ],
           "linkType": "HARD",
         }]
@@ -1392,6 +1443,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["client", "workspace:."],
+            ["@headlessui/react", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:1.7.13"],
+            ["@heroicons/react", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:2.0.16"],
             ["@types/react", "npm:18.0.29"],
             ["@types/react-dom", "npm:18.0.11"],
             ["@vitejs/plugin-react", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.1.0"],
@@ -1411,6 +1464,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vite", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:4.2.1"]
           ],
           "linkType": "SOFT",
+        }]
+      ]],
+      ["client-only", [
+        ["npm:0.0.1", {
+          "packageLocation": "./.yarn/cache/client-only-npm-0.0.1-07d3e9505c-0c16bf660d.zip/node_modules/client-only/",
+          "packageDependencies": [
+            ["client-only", "npm:0.0.1"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["color-convert", [

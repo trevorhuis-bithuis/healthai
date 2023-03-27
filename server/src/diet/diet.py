@@ -18,26 +18,21 @@ recipe_generate = api.model(
     },
 )
 
-recipe_input = api.model(
-    "RecipeInput",
+recipe = api.model(
+    "Recipe",
     {
-        "recipe": fields.String(required=True),
-        "user_email": fields.String(required=True),
-    },
-)
-
-recipe_output = api.model(
-    "RecipeOutput",
-    {
-        "id": fields.String,
-        "recipe": fields.String,
-        "created_date": fields.DateTime,
+        "id": fields.String(readOnly=True),
+        "user_email": fields.String(),
+        "title": fields.String(),
+        "ingredients": fields.List(fields.String),
+        "instructions": fields.List(fields.String),
+        "created_date": fields.DateTime(readOnly=True),
     },
 )
 
 
 class RecipesList(Resource):
-    @api.expect(recipe_input, validate=True)
+    @api.expect(recipe, validate=True)
     def post(self):
         post_data = request.get_json()
         current_user = get_jwt_identity()
@@ -48,7 +43,9 @@ class RecipesList(Resource):
         recipe = {
             "id": shortuuid.uuid(),
             "user_email": email,
-            "recipe": recipe,
+            "title": recipe.get("title"),
+            "ingredients": recipe.get("ingredients"),
+            "instructions": recipe.get("instructions"),
             "created_date": datetime.utcnow().isoformat(),
         }
 
@@ -77,7 +74,7 @@ class RecipesGenerate(Resource):
 
 
 class Recipes(Resource):
-    @api.marshal_with(recipe_output)
+    @api.marshal_with(recipe)
     def get(self, id):
         return get_recipe(id), 200
 

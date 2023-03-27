@@ -1,7 +1,6 @@
 import openai
 import re, os
 
-# Set up OpenAI API key and model
 openai.api_key = os.getenv("OPENAI_API_KEY")
 model_engine = "text-davinci-003"
 
@@ -27,5 +26,23 @@ def generate_recipe(ingredients, allergies):
     recipe = re.sub(r"^\d+\.?\s*", "", recipe, flags=re.M)
     recipe = re.sub(r"\n+", "\n", recipe)
     recipe = re.sub(r"\n\s+\n", "\n\n", recipe)
+
+    return parse_recipe_to_object(recipe)
+
+
+def parse_recipe_to_object(recipe_str):
+    recipe = {"ingredients": [], "instructions": []}
+    recipe_split = recipe_str.split("\n")
+    recipe["title"] = recipe_split.pop(0)
+    recipe_split.pop(0)  # pop the ingredients header
+
+    for i in range(len(recipe_split)):
+        if "Instructions:" in recipe_split[i]:
+            recipe_split = recipe_split[i + 1 :]
+            break
+        recipe["ingredients"].append(recipe_split[i])
+
+    for i in range(len(recipe_split)):
+        recipe["instructions"].append(recipe_split[i])
 
     return recipe

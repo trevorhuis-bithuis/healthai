@@ -18,7 +18,7 @@ const Login = () => {
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
-        headerText={'Sign up'}
+        headerText={'Login'}
         handleSubmit={handleLogin}
       />
     </div>
