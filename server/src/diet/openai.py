@@ -6,7 +6,7 @@ model_engine = "text-davinci-003"
 
 
 def generate_recipe(ingredients, allergies):
-    prompt = f"Write a recipe with {len(ingredients)} ingredients"
+    prompt = f"Write a recipe with these ingredients"
     if allergies:
         prompt += f" that doesn't contain {', '.join(allergies)}"
     prompt += f". The ingredients are: {', '.join(ingredients)}. You may add more ingredients except for the allergies."
@@ -42,7 +42,6 @@ def parse_recipe_to_object(recipe_str):
             break
         recipe["ingredients"].append(recipe_split[i])
 
-    for i in range(len(recipe_split)):
-        recipe["instructions"].append(recipe_split[i])
+    recipe["instructions"] = recipe_split
 
     return recipe
