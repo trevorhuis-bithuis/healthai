@@ -1,4 +1,4 @@
-healthai: hysterical-word.surge.sh
+healthai: http://hysterical-word.surge.sh
 
 Front-end: React deployed on surge
 Back-end: Flask deployed on fly.io
