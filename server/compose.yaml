@@ -18,3 +18,4 @@ services:
       - FLASK_DEBUG=1
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - REDIS_URL=redis://redis:6379

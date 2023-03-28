@@ -91,7 +91,7 @@ const Home = () => {
           </div>
 
           {isLoading && (
-            <div class="text-center">
+            <div className="text-center">
               Processing...
             </div>
           )}
