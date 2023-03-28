@@ -17,3 +17,11 @@ def add_recipe_to_user(email, recipe_id):
     user = get_user(email)
     user["recipes"].append(recipe_id)
     set_user(email, user)
+
+
+def get_user_recipes(recipe_ids):
+    recipes = []
+    for recipe_id in recipe_ids:
+        recipe = get_recipe(recipe_id)
+        recipes.append(recipe)
+    return recipes

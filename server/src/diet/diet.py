@@ -33,10 +33,10 @@ recipe = api.model(
 
 class RecipesList(Resource):
     @api.expect(recipe, validate=True)
+    @jwt_required()
     def post(self):
         post_data = request.get_json()
-        current_user = get_jwt_identity()
-        email = current_user["email"]
+        email = get_jwt_identity()
         recipe = post_data.get("recipe")
         response_object = {}
 
@@ -44,8 +44,8 @@ class RecipesList(Resource):
             "id": shortuuid.uuid(),
             "user_email": email,
             "title": recipe.get("title"),
-            "ingredients": recipe.get("ingredients"),
-            "instructions": recipe.get("instructions"),
+            "ingredients": recipe["ingredients"],
+            "instructions": recipe["instructions"],
             "created_date": datetime.utcnow().isoformat(),
         }
 

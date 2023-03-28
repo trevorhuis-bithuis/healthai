@@ -61,6 +61,7 @@ class Register(Resource):
             "email": email,
             "created_date": datetime.utcnow().isoformat(),
             "recipes": [],
+            "workouts": [],
         }
         set_user(email, user)
 

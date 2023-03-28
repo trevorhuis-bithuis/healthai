@@ -7,11 +7,13 @@ const Recipes = () => {
   const { cookies } = useAuth();
   const token = cookies.token;
 
+  const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState('');
   const [allergies, setAllergies] = useState('');
   const [recipe, setRecipe] = useState(null);
 
   const handleGenerateRecipe = async () => {
+    setIsLoading(true);
     const ingredientsList = ingredients.split(',').map((ingredient) => ingredient.trim());
     const allergiesList = allergies.split(',').map((allergy) => allergy.trim());
 
@@ -22,6 +24,16 @@ const Recipes = () => {
     });
 
     setRecipe(response.data.recipe);
+    setIsLoading(false);
+  }
+
+  const handleSaveRecipe = async () => {
+    await api.post('/diet/recipes', { recipe }, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    alert('Recipe saved successfully!');
   }
 
   return (
@@ -69,7 +81,15 @@ const Recipes = () => {
             Generate
           </button>
 
-          {recipe !== null && (
+          {isLoading && (
+            <div className='text-center'>
+              <p>
+                Generating recipe...
+              </p>
+            </div>
+          )}
+
+          {!isLoading && recipe !== null && (
             <div className='bg-white border-1'>
               <p>
                 {`Title: ${recipe.title}`}
@@ -96,8 +116,16 @@ const Recipes = () => {
                   </li>
                 ))}
               </ul>
+              <button
+                type="button"
+                className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={handleSaveRecipe}
+              >
+                Save
+              </button>
             </div>
           )}
+
         </div>
       </div>
     </Layout>

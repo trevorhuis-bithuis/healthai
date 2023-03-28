@@ -5,6 +5,7 @@ from flask_cors import CORS
 from src.diet.diet import diet_blueprint
 from src.users.users import users_blueprint
 from src.auth.auth import auth_blueprint
+from src.exercise.exercise import exercise_blueprint
 
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -20,6 +21,7 @@ def create_app(script_info=None):
     app.register_blueprint(users_blueprint)
     app.register_blueprint(diet_blueprint)
     app.register_blueprint(auth_blueprint)
+    app.register_blueprint(exercise_blueprint)
 
     # shell context for flask cli
     @app.shell_context_processor
